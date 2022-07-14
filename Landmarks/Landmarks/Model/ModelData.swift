@@ -7,6 +7,16 @@ import Combine
 
 final class ModelData: ObservableObject {
     @Published var landmarks: [Landmark] = load("landmarkData.json")
+    var hikes: [Hike] = load("hikeData.json") // hikedata를 바꾸지 않을거라 @Published 안해줘도 됨.
+    @Published var profile = Profile.default
+    
+    var features: [Landmark] {
+        landmarks.filter { $0.isFeatured }
+    }
+    
+    var categories: [String: [Landmark]] {
+        Dictionary(grouping: landmarks) { $0.category.rawValue }
+    }
     
 }
 
